@@ -21,7 +21,7 @@ const PokemonsList = ({ data }: { data: TPokemonsResponse }) => {
         {data.results.map((pokemon, index) => (
           <div>
             <Link component={RouterLink} key={pokemon.name} to={`/pokemons/${index + 1}`}>
-              {pokemon.name} - {pokemon.url}
+              {pokemon.name}
             </Link>
           </div>
         ))
