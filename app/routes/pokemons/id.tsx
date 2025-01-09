@@ -1,6 +1,7 @@
-import { Link, Typography } from "@mui/material";
-import { Link as RouterLink, useParams } from "react-router";
-import { useQuery } from "@tanstack/react-query"
+import { Grid2, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import { BackButton } from "components/back-button";
+import { useParams } from "react-router";
 
 type TPokemonResponse = {
   name: string
@@ -41,17 +42,18 @@ export default function PokemonDetails() {
     queryFn: () => getPokemonData(params.id ?? ''),
   });
 
-  if (isLoading) {
-    return <div className="p-6">loading...</div>
-  }
 
-  if (isError) {
-    return <div className="p-6">Error</div>
-  }
 
   return (
-    <div className="p-6">
-      <PokemonsList data={data} />
-    </div>
+    <Grid2 container direction="column" alignItems="flex-start" padding={4} spacing={4}>
+      <BackButton />
+
+      {isLoading ?
+        <Typography variant="h6">Loading..</Typography>
+        : isError ?
+          <Typography variant="h6">Error</Typography>
+          : <PokemonsList data={data} />
+      }
+    </Grid2>
   )
 }
