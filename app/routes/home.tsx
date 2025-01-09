@@ -1,5 +1,6 @@
-import { Link } from "react-router";
+import { Link as RouterLink } from "react-router";
 import type { Route } from "./+types/home";
+import { Link, Typography } from "@mui/material";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -10,9 +11,9 @@ export function meta({ }: Route.MetaArgs) {
 
 export default function Home() {
   return (
-    <div>
-      <h1>Using react router</h1>
-      <Link to="/pokemons">Pokemons</Link>
+    <div className="p-6">
+      <Typography variant="h2" className="pb-4">Using react router</Typography>
+      <Link component={RouterLink} to="/pokemons">Pokemons</Link>
     </div>
   )
 }
