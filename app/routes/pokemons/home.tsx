@@ -1,7 +1,9 @@
-import { Grid2, Link, Typography } from "@mui/material";
+import { Box, Grid2, Link, Typography } from "@mui/material";
+import { DataGridPro } from "@mui/x-data-grid-pro";
 import { useQuery } from "@tanstack/react-query";
 import { BackButton } from "components/back-button";
 import { Link as RouterLink } from "react-router";
+
 
 type TPokemonsResponse = {
   count: number;
@@ -13,21 +15,18 @@ type TPokemonsResponse = {
   }>
 }
 
-const PokemonsList = ({ data }: { data: TPokemonsResponse }) => {
+const PokemonList = ({ data }: { data?: TPokemonsResponse }) => {
   return (
-    <div>
-      <Typography variant="h6" className="pb-4">Total Pokemons: {data.count}</Typography>
+    <div className="w-full">
+      <Typography variant="h6" className="pb-4">Total Pokemons: {data?.count}</Typography>
 
-      <div>
-        {data.results.map((pokemon, index) => (
-          <div>
-            <Link component={RouterLink} key={pokemon.name} to={`/pokemons/${index + 1}`}>
-              {pokemon.name}
-            </Link>
-          </div>
-        ))
-        }
-      </div>
+      <Box sx={{ height: 520, width: '100%' }}>
+        <DataGridPro
+          rowHeight={38}
+          columns={[{ field: 'name', headerName: 'Name', renderCell: (params) => <Link component={RouterLink} to={`/pokemons/${params.id}`}>{params.value}</Link> }]}
+          rows={data?.results.map((pokemon, index) => ({ id: index + 1, name: pokemon.name }))}
+        />
+      </Box>
     </div>
   )
 }
@@ -47,14 +46,14 @@ export default function Pokemons() {
     <Grid2 container direction="column" alignItems="flex-start" padding={4} spacing={4}>
       <BackButton />
 
-      <Grid2 container direction="column" alignItems="flex-start" spacing={2}>
+      <Grid2 container direction="column" alignItems="flex-start" spacing={2} width="100%">
         <Typography variant="h3">Pokemons</Typography>
 
         {isLoading ?
           <div>loading...</div> :
           isError ? <div>Error</div> :
             !data ? <div>no data</div>
-              : <PokemonsList data={data} />
+              : <PokemonList data={data} />
         }
       </Grid2>
     </Grid2>

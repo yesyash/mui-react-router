@@ -42,8 +42,6 @@ export default function PokemonDetails() {
     queryFn: () => getPokemonData(params.id ?? ''),
   });
 
-
-
   return (
     <Grid2 container direction="column" alignItems="flex-start" padding={4} spacing={4}>
       <BackButton />

@@ -10,6 +10,7 @@ import {
 import type { Route } from "./+types/root";
 import stylesheet from "./app.css?url";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { LicenseInfo } from '@mui/x-license';
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -26,6 +27,8 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  LicenseInfo.setLicenseKey(import.meta.env.VITE_MUIX_LICENSE_KEY);
+
   return (
     <html lang="en">
       <head>
